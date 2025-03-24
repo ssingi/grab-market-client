@@ -2,8 +2,11 @@ import React from "react";
 import "./index.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuth } from "../login/AuthContext";
+
 function MainPage() {
   const [products, setProducts] = React.useState([]);
+  const { user, logout } = useAuth();
   React.useEffect(function () {
     axios
       .get(

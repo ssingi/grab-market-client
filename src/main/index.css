@@ -10,7 +10,7 @@
   margin-top: 16px;
 }
 #product-list {
-  /*수평정렬렬*/
+  /*수평정렬*/
   display: flex;
   /*줄바꿈*/
   flex-wrap: wrap;
