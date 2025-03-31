@@ -4,12 +4,12 @@ const cors = require("cors");
 const fs = require("fs").promises;
 const path = require("path");
 const app = express();
-const port = 3002;
+const port = 3001;
 
 // CORS 설정
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"], // 허용할 클라이언트 주소들
+    origin: ["http://localhost:3002", "http://localhost:8080"], // 허용할 클라이언트 주소들
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // 허용할 HTTP 메서드
     credentials: true, // 쿠키를 포함한 요청 허용
   })

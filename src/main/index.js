@@ -3,18 +3,19 @@ import "./index.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../login/AuthContext";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 function MainPage() {
   const [products, setProducts] = React.useState([]);
   const { user, logout } = useAuth();
   React.useEffect(function () {
     axios
-      .get(
-        "https://224bcf97-02aa-4b03-aecb-eb6966f97e53.mock.pstmn.io/products"
-      )
+      .get("http://localhost:8080/products")
       .then(function (result) {
-        const products = result.data.products;
-        setProducts(products);
+        setProducts(result.data.product);
       })
       .catch(function (error) {
         console.error("에러 발생: ", error);
@@ -38,13 +39,18 @@ function MainPage() {
                 <div className="product-contents">
                   <span className="product-name">{product.name}</span>
                   <span className="product-price">{product.price}원</span>
-                  <span className="product-seller">
-                    <img
-                      className="product-avatar"
-                      src="images/icons/avatar.png"
-                    />
-                    <span>{product.seller}</span>
-                  </span>
+                  <div className="product-footer">
+                    <div className="product-seller">
+                      <img
+                        className="product-avatar"
+                        src="images/icons/avatar.png"
+                      />
+                      <span>{product.seller}</span>
+                    </div>
+                    <span className="product-date">
+                      {dayjs(product.createdAt).fromNow()}
+                    </span>
+                  </div>
                 </div>
               </Link>
             </div>

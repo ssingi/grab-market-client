@@ -12,7 +12,7 @@ const UserSchema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력해주세요"),
 });
 
-const API_URL = "http://localhost:3002"; // 서버 주소 확인
+const API_URL = "http://localhost:3001"; // 서버 주소 확인
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
