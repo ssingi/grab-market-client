@@ -43,15 +43,16 @@ function App() {
           <Link to="/">
             <img src="/images/icons/logo.png" alt="logo" />
           </Link>
-          <Button
-            size="large"
-            onClick={function () {
-              navigate("/upload");
-            }}
-            icon={<DownloadOutlined />}
-          >
-            상품 업로드
-          </Button>
+
+          {!isAuthPage && (
+            <Button
+              size="large"
+              onClick={() => navigate("/upload")}
+              icon={<DownloadOutlined />}
+            >
+              상품 업로드
+            </Button>
+          )}
           {user && (
             <Button
               id="logout-button"
