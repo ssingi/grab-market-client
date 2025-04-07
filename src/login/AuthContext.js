@@ -12,7 +12,41 @@ const UserSchema = z.object({
   email: z.string().email("유효한 이메일 주소를 입력해주세요"),
 });
 
-const API_URL = "http://localhost:3001"; // 서버 주소 확인
+const API_URL = "http://localhost:8080"; // 서버 주소를 8080 포트로 수정
+
+export const register = async (formData) => {
+  const response = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "회원가입 실패");
+  }
+
+  return await response.json();
+};
+
+export const login = async (credentials) => {
+  const response = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "로그인 실패");
+  }
+
+  return await response.json();
+};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
@@ -44,22 +78,12 @@ export function AuthProvider({ children }) {
   };
 
   // 회원가입 함수 정의
-  const register = async (newUser) => {
+  const registerUser = async (newUser) => {
     try {
       setErrorMessage("");
       UserSchema.parse(newUser);
 
-      const response = await fetch(`${API_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "회원가입에 실패했습니다");
-      }
+      const data = await register(newUser);
 
       return true;
     } catch (error) {
@@ -70,24 +94,12 @@ export function AuthProvider({ children }) {
   };
 
   // 로그인 함수
-  const login = async (credentials) => {
+  const loginUser = async (credentials) => {
     try {
       setErrorMessage("");
       UserSchema.pick({ username: true, password: true }).parse(credentials);
 
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "로그인 실패");
-      }
-
-      const data = await response.json();
+      const data = await login(credentials);
 
       if (!data.user) {
         throw new Error("사용자 정보를 받아오지 못했습니다");
@@ -107,9 +119,9 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
-        login,
+        login: loginUser,
         logout,
-        register,
+        register: registerUser,
         errorMessage,
         setErrorMessage,
       }}
