@@ -4,7 +4,7 @@ import { useAuth } from "./AuthContext";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    userID: "", // userID로 변경
     password: "",
     email: "",
   });
@@ -34,12 +34,12 @@ const RegisterPage = () => {
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">사용자 이름:</label>
+          <label htmlFor="userID">사용자 ID:</label> {/* userID로 변경 */}
           <input
             type="text"
-            id="username"
-            name="username"
-            value={formData.username}
+            id="userID"
+            name="userID" // userID로 변경
+            value={formData.userID} // userID로 변경
             onChange={handleChange}
             required
           />

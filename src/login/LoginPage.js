@@ -4,7 +4,7 @@ import { useAuth } from "./AuthContext";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
-    username: "",
+    userID: "", // userID로 변경
     password: "",
   });
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     return () => {
-      setCredentials({ username: "", password: "" });
+      setCredentials({ userID: "", password: "" });
     };
   }, []);
 
@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!credentials.username.trim() || !credentials.password.trim()) {
+    if (!credentials.userID.trim() || !credentials.password.trim()) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
@@ -47,13 +47,13 @@ const LoginPage = () => {
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">사용자 이름:</label>
+          <label htmlFor="userID">사용자 ID:</label> {/* userID로 변경 */}
           <input
             type="text"
-            id="username"
-            name="username"
+            id="userID"
+            name="userID" // userID로 변경
             autoComplete="username"
-            value={credentials.username}
+            value={credentials.userID} // userID로 변경
             onChange={handleChange}
             required
           />

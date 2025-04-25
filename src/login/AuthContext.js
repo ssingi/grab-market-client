@@ -4,7 +4,7 @@ import * as z from "zod";
 const AuthContext = createContext();
 
 const UserSchema = z.object({
-  username: z
+  userID: z // userID로 변경
     .string()
     .min(3, "최소 3자 이상 입력해주세요")
     .max(20, "20자 이내로 입력해주세요"),
@@ -97,7 +97,7 @@ export function AuthProvider({ children }) {
   const loginUser = async (credentials) => {
     try {
       setErrorMessage("");
-      UserSchema.pick({ username: true, password: true }).parse(credentials);
+      UserSchema.pick({ userID: true, password: true }).parse(credentials); // userID로 변경
 
       const data = await login(credentials);
 
