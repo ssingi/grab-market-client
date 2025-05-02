@@ -26,7 +26,7 @@ function Body() {
           }
         />
         <Route
-          path="/products/:id"
+          path="/products/:productID"
           element={
             <ProtectedRoute>
               <ProductPage />

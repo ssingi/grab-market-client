@@ -2,18 +2,15 @@ import React from "react";
 import "./index.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useAuth } from "../login/AuthContext";
 import { API_URL } from "../config/constants";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Carousel } from "antd";
-const cors = require("cors");
 
 dayjs.extend(relativeTime);
 
 function MainPage() {
   const [products, setProducts] = React.useState([]);
-  const { user, logout } = useAuth();
   const [banners, setBanners] = React.useState([]);
   React.useEffect(function () {
     axios
@@ -44,7 +41,10 @@ function MainPage() {
           return (
             <Link to={banner.href} key={index}>
               <div id="banner">
-                <img src={`${API_URL}/${banner.imageUrl}`} />
+                <img
+                  src={`${API_URL}/${banner.imageUrl}`}
+                  alt="배너 이미지지"
+                />
               </div>
             </Link>
           );
@@ -63,12 +63,13 @@ function MainPage() {
                     pointerEvents: product.quantity <= 0 ? "none" : "auto", // 클릭 방지
                   }}
                   className="product-link"
-                  to={`/products/${product.id}`}
+                  to={`/products/${product.productID}`}
                 >
                   <div>
                     <img
                       className="product-img"
                       src={`${API_URL}/${product.imageUrl}`}
+                      alt="상품 이미지"
                     />
                   </div>
                   <div className="product-contents">
@@ -79,6 +80,7 @@ function MainPage() {
                         <img
                           className="product-avatar"
                           src="images/icons/avatar.png"
+                          alt="판매자 이미지"
                         />
                         <span>{product.seller}</span>
                       </div>

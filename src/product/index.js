@@ -7,12 +7,12 @@ import dayjs from "dayjs";
 import { Button, message } from "antd";
 
 function ProductPage() {
-  const { id } = useParams();
+  const { productID } = useParams();
   const [product, setProduct] = useState(null);
 
   const getProduct = () => {
     axios
-      .get(`${API_URL}/products/${id}`)
+      .get(`${API_URL}/products/${productID}`)
       .then(function (result) {
         setProduct(result.data.product);
       })
@@ -31,7 +31,7 @@ function ProductPage() {
 
   const onClickPurchase = () => {
     axios
-      .post(`${API_URL}/purchase/${id}`)
+      .post(`${API_URL}/purchase/${productID}`)
       .then((result) => {
         message.info("구매가 완료되었습니다.");
         getProduct();
