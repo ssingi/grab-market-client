@@ -56,8 +56,12 @@ function MainPage() {
           products.map(function (product, index) {
             return (
               <div className="product-card" key={index}>
+                {product.quantity <= 0 && <div className="product-blur" />}
                 <Link
-                  style={{ color: "inherit" }}
+                  style={{
+                    color: "inherit",
+                    pointerEvents: product.quantity <= 0 ? "none" : "auto", // 클릭 방지
+                  }}
                   className="product-link"
                   to={`/products/${product.id}`}
                 >

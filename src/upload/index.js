@@ -18,6 +18,13 @@ function UploadPage() {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
   const onSubmit = (values) => {
+    const { name, description, price, seller, quantity } = values;
+    if (!name || !description || !price || !seller || !imageUrl || !quantity) {
+      return message.error("모든 필드를 입력해주세요!");
+    }
+    if (isNaN(price)) {
+      return message.error("가격은 숫자여야 합니다.");
+    }
     axios
       .post(`${API_URL}/products`, {
         name: values.name,
@@ -25,6 +32,7 @@ function UploadPage() {
         seller: values.seller,
         price: parseInt(values.price),
         imageUrl: imageUrl,
+        quantity: parseInt(values.quantity),
       })
       .then((result) => {
         navigate("/", { replace: true });
@@ -106,6 +114,21 @@ function UploadPage() {
           <InputNumber defaultValue={0} className="upload-price" size="large" />
         </Form.Item>
         <Divider />
+
+        <Form.Item
+          name="quantity"
+          label={<div className="upload-label">상품 수량</div>}
+          rules={[{ required: true, message: "상품 수량을 입력해주세요" }]}
+        >
+          <InputNumber
+            min={1}
+            className="upload-quantity"
+            size="large"
+            placeholder="수량을 입력해주세요"
+          />
+        </Form.Item>
+        <Divider />
+
         <Form.Item
           name="description"
           label={<div className="upload-label">상품소개</div>}
