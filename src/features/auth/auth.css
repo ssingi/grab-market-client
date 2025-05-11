@@ -1,4 +1,4 @@
-.login-container {
+.auth-container {
   max-width: 300px;
   margin: 50px auto;
   padding: 20px;
@@ -6,28 +6,28 @@
   border-radius: 5px;
 }
 
-.login-container h2 {
+.auth-container h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.login-container form div {
+.auth-container form div {
   margin-bottom: 15px;
 }
 
-.login-container label {
+.auth-container label {
   display: block;
   margin-bottom: 5px;
 }
 
-.login-container input {
-  width: 100%;
+.auth-container input {
+  width: 282px;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.login-container button {
+.auth-container button {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-.login-container button:hover {
+.auth-container button:hover {
   background-color: #0056b3;
 }
 
@@ -48,17 +48,4 @@
   border: 1px solid #ffcccc;
   border-radius: 4px;
   background-color: #ffeeee;
-}
-.auth-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.register-section {
-  margin-top: 2rem;
-  text-align: center;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
 }

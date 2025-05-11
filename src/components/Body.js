@@ -1,12 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import MainPageComponent from "../main/index.js";
-import UploadPage from "../upload/index";
-import ProductPage from "../product/index";
-import ProtectedRoute from "../login/ProtectedRoute";
-import LoginPage from "../login/LoginPage";
-import RegisterPage from "../login/RegisterPage";
-import { useAuth } from "../login/AuthContext";
+import MainPageComponent from "../features/main";
+import UploadPage from "../features/upload";
+import ProductPage from "../features/product";
+import { ProtectedRoute } from "../utils/authUtils";
+import LoginPage from "../features/auth/login/LoginPage";
+import RegisterPage from "../features/auth/register/RegisterPage";
+import { useAuth } from "../features/auth/AuthContext";
+import "./Body.css";
 
+/** Body 컴포넌트 */
 function Body() {
   const { user } = useAuth();
 
