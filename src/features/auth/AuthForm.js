@@ -1,6 +1,32 @@
 import React from "react";
 
 /**
+ * **CustomInputField 컴포넌트**
+ * - 입력 필드를 렌더링하는 재사용 가능한 컴포넌트입니다.
+ *
+ * @param {Object} props - 컴포넌트 속성
+ * @param {string} props.name - 입력 필드의 name 속성
+ * @param {string} props.type - 입력 필드의 타입 (text, password, email 등)
+ * @param {string} props.label - 입력 필드의 라벨 텍스트
+ * @param {Object} props.formData - 입력 필드의 데이터
+ * @param {Function} props.onChange - 입력 필드 변경 핸들러
+ * @returns {JSX.Element} 입력 필드 컴포넌트
+ */
+const CustomInputField = ({ name, type, label, value, onChange }) => (
+  <div>
+    <label htmlFor={name}>{label}</label>
+    <input
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required
+    />
+  </div>
+);
+
+/**
  * 공통 인증 폼 컴포넌트
  * @param {Object} props - 컴포넌트 속성
  * @param {string} props.title - 폼 제목
@@ -22,6 +48,15 @@ const AuthForm = ({
   error = "",
   footer = null,
 }) => {
+  // 입력 필드 설정
+  const FORM_FIELDS = [
+    { name: "userID", type: "text", label: "사용자 ID:" },
+    { name: "password", type: "password", label: "비밀번호:" },
+    ...(formData.email !== undefined
+      ? [{ name: "email", type: "email", label: "이메일:" }]
+      : []),
+  ];
+
   return (
     <div className="auth-container">
       <h2>{title}</h2>
@@ -31,46 +66,16 @@ const AuthForm = ({
 
       {/* 로그인 및 회원가입 폼 */}
       <form onSubmit={onSubmit}>
-        {/* 사용자 ID 입력 필드 */}
-        <div>
-          <label htmlFor="userID">사용자 ID:</label>
-          <input
-            type="text"
-            id="userID"
-            name="userID"
-            value={formData.userID}
+        {FORM_FIELDS.map(({ name, type, label }) => (
+          <CustomInputField
+            key={name}
+            name={name}
+            type={type}
+            label={label}
+            value={formData[name]}
             onChange={onChange}
-            required
           />
-        </div>
-
-        {/* 비밀번호 입력 필드 */}
-        <div>
-          <label htmlFor="password">비밀번호:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={onChange}
-            required
-          />
-        </div>
-
-        {/* 이메일 입력 필드 (회원가입 시에만 표시) */}
-        {formData.email !== undefined && (
-          <div>
-            <label htmlFor="email">이메일:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={onChange}
-              required
-            />
-          </div>
-        )}
+        ))}
 
         {/* 제출 버튼 */}
         <button type="submit" disabled={isLoading}>

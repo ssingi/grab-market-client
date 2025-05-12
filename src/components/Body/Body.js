@@ -1,14 +1,20 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import MainPageComponent from "../features/main";
-import UploadPage from "../features/upload";
-import ProductPage from "../features/product";
-import { ProtectedRoute } from "../utils/authUtils";
-import LoginPage from "../features/auth/login/LoginPage";
-import RegisterPage from "../features/auth/register/RegisterPage";
-import { useAuth } from "../features/auth/AuthContext";
+import MainPageComponent from "../../features/main";
+import UploadPage from "../../features/upload";
+import ProductPage from "../../features/product";
+import { ProtectedRoute } from "../../utils/authUtils";
+import LoginPage from "../../features/auth/login/LoginPage";
+import RegisterPage from "../../features/auth/register/RegisterPage";
+import { useAuth } from "../../features/auth/AuthContext";
 import "./Body.css";
 
-/** Body 컴포넌트 */
+/**
+ * **Body 컴포넌트**
+ * - 애플리케이션의 본문을 구성하는 컴포넌트입니다.
+ * - 라우팅을 통해 다양한 페이지를 렌더링합니다.
+ * - 사용자의 인증 상태에 따라 접근 가능한 페이지를 제한합니다.
+ * @returns {JSX.Element} Body 컴포넌트
+ */
 function Body() {
   const { user } = useAuth();
 

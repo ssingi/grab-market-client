@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "antd";
 import { DownloadOutlined, LogoutOutlined } from "@ant-design/icons";
-import { useAuth } from "../features/auth/AuthContext";
+import { useAuth } from "../../features/auth/AuthContext";
 import "./Header.css";
 
 /** Header 컴포넌트 */
