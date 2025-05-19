@@ -5,6 +5,7 @@ import { API_URL } from "../../config/constants";
 import dayjs from "dayjs";
 import { Button } from "antd";
 import { getProduct, onClickPurchase } from "./productHandlers";
+import { useAuth } from "../auth/AuthContext";
 
 /**
  * **상품 페이지 컴포넌트**
@@ -18,18 +19,16 @@ function ProductPage() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
   /**
    * **상품 정보 가져오기**
    * - `productID`를 기반으로 서버에서 상품 정보를 가져옵니다.
    * - 가져온 데이터를 `product` 상태에 저장하고 로딩 상태를 업데이트합니다.
    */
-  useEffect(
-    function () {
-      getProduct(productID, setProduct, setIsLoading);
-    },
-    [productID]
-  );
+  useEffect(() => {
+    getProduct(productID, setProduct, setIsLoading);
+  }, [productID]);
 
   // 로딩 상태 처리
   if (isLoading) return <h1>상품 정보를 받고 있습니다...</h1>;
@@ -63,7 +62,13 @@ function ProductPage() {
           size="large"
           type="primary"
           danger={true}
-          onClick={onClickPurchase}
+          onClick={() =>
+            onClickPurchase(
+              productID,
+              () => getProduct(productID, setProduct, setIsLoading),
+              user?.userID
+            )
+          }
           disabled={quantity === 0}
         >
           구매하기

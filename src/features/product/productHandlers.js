@@ -35,9 +35,10 @@ const handleError = (error, defaultMessage) => {
  * @param {string} productID - 상품 ID
  * @param {Function} getProduct - 상품 정보 갱신 함수
  */
-export const onClickPurchase = async (productID, getProduct) => {
+export const onClickPurchase = async (productID, getProduct, userID) => {
   try {
-    await axios.post(`${API_URL}/purchase/${productID}`);
+    console.log("구매시도: ", userID);
+    await axios.post(`${API_URL}/purchase/${productID}`, { userID });
     message.info("구매가 완료되었습니다.");
     getProduct();
   } catch (error) {
