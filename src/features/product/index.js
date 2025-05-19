@@ -5,12 +5,14 @@ import { API_URL } from "../../config/constants";
 import dayjs from "dayjs";
 import { Button } from "antd";
 import { getProduct, onClickPurchase } from "./productHandlers";
+import { useAuth } from "../auth/AuthContext";
 
 /** 상품 페이지 컴포넌트 */
 function ProductPage() {
   const { productID } = useParams();
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
   // 상품 정보 가져오기
   useEffect(() => {
@@ -49,7 +51,13 @@ function ProductPage() {
           size="large"
           type="primary"
           danger={true}
-          onClick={onClickPurchase}
+          onClick={() =>
+            onClickPurchase(
+              productID,
+              () => getProduct(productID, setProduct, setIsLoading),
+              user?.userID
+            )
+          }
           disabled={quantity === 0}
         >
           구매하기
