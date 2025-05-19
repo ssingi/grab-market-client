@@ -13,12 +13,9 @@ function ProductPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // 상품 정보 가져오기
-  useEffect(
-    function () {
-      getProduct(productID, setProduct, setIsLoading);
-    },
-    [productID]
-  );
+  useEffect(() => {
+    getProduct(productID, setProduct, setIsLoading);
+  }, [productID]);
 
   // 로딩 상태 처리
   if (isLoading) return <h1>상품 정보를 받고 있습니다...</h1>;

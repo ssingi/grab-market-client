@@ -4,15 +4,19 @@ import { useState } from "react";
 import { API_URL } from "../../config/constants.js";
 import { useNavigate } from "react-router-dom";
 import { onChangeImage, onSubmit } from "./uploadHandlers.js";
+import { useAuth } from "../auth/AuthContext.js";
 
 /** 업로드 페이지 컴포넌트 */
 const UploadPage = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [form] = Form.useForm();
 
   return (
     <div id="upload-container">
       <Form
+        form={form}
         name="상품 업로드"
         onFinish={(values) => onSubmit({ values, imageUrl, navigate })}
         initialValues={{ price: 0 }}
@@ -45,16 +49,25 @@ const UploadPage = () => {
         </Form.Item>
         <Divider />
 
-        {/* 판매자 이름 */}
+        {/* 판매자 ID */}
         <Form.Item
-          label={<div className="upload-label">판매자 명</div>}
+          label={<div className="upload-label">판매자 ID</div>}
           name="seller"
-          rules={[{ required: true, message: "판매자 이름을 입력해주세요" }]}
         >
           <Input
             className="upload-name"
             size="large"
-            placeholder="이름을 입력해 주세요."
+            placeholder="판매자 ID를 입력해 주세요."
+            addonAfter={
+              <Button
+                id="set-my-id-btn"
+                type="link"
+                size="small"
+                onClick={() => form.setFieldsValue({ seller: user?.userID })}
+              >
+                내 아이디로 입력
+              </Button>
+            }
           />
         </Form.Item>
         <Divider />
