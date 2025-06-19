@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import MainPageComponent from "../../features/main";
 import UploadPage from "../../features/upload";
 import ProductPage from "../../features/product";
+import CartPage from "../../features/product/CartPage"; // 장바구니 페이지 import 추가
 import { ProtectedRoute } from "../../utils/authUtils";
 import LoginPage from "../../features/auth/login/LoginPage";
 import RegisterPage from "../../features/auth/register/RegisterPage";
@@ -49,6 +50,15 @@ function Body() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
+        />{" "}
+        {/* 장바구니 라우트 추가 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/" />} />

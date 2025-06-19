@@ -1,6 +1,10 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "antd";
-import { DownloadOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  DownloadOutlined,
+  LogoutOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { useAuth } from "../../features/auth/AuthContext";
 import "./Header.css";
 
@@ -25,13 +29,23 @@ function Header() {
         </Link>
 
         {!isAuthPage && (
-          <Button
-            size="large"
-            onClick={() => navigate("/upload")}
-            icon={<DownloadOutlined />}
-          >
-            상품 업로드
-          </Button>
+          <>
+            <Button
+              size="large"
+              onClick={() => navigate("/upload")}
+              icon={<DownloadOutlined />}
+            >
+              상품 업로드
+            </Button>
+            <Button
+              size="large"
+              style={{ marginLeft: 8 }}
+              onClick={() => navigate("/cart")}
+              icon={<ShoppingCartOutlined />}
+            >
+              장바구니
+            </Button>
+          </>
         )}
         {user && (
           <Button

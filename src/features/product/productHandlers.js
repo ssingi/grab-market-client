@@ -45,3 +45,28 @@ export const onClickPurchase = async (productID, getProduct, userID) => {
     handleError(error, ERROR_MESSAGES.PURCHASE_ERROR);
   }
 };
+
+/**
+ * 상품 구매 요청
+ * @param {string} productID - 상품 ID
+ * @param {number} quantity - 구매 수량
+ * @param {number} userID - 구매자 ID
+ * @param {string} deliveryAddress - 배송지 주소
+ */
+export const purchaseProduct = async (
+  productID,
+  quantity,
+  userID,
+  deliveryAddress = "주소 미입력"
+) => {
+  try {
+    const res = await axios.post(`${API_URL}/purchase/${productID}`, {
+      userID,
+      quantity,
+      deliveryAddress,
+    });
+    return res.data;
+  } catch (error) {
+    throw error.response?.data || ERROR_MESSAGES.PURCHASE_ERROR;
+  }
+};
