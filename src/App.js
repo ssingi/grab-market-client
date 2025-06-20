@@ -1,7 +1,7 @@
 import "./App.css";
 import Header from "./components/Header/Header";
 import Body from "./components/Body/Body";
-import Footer from "./components/Footer/Footer";
+import { Footer } from "./components/Footer/Footer"; // named import로 수정!
 import { AuthProvider } from "./features/auth/AuthContext";
 import { CartProvider } from "./features/product/CartContext"; // CartProvider import 추가
 

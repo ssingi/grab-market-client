@@ -39,9 +39,6 @@ function Header() {
           <li className={location.pathname.startsWith("/products") ? "active" : ""}>
             <Link to="/products">상품</Link>
           </li>
-          <li className={location.pathname === "/about" ? "active" : ""}>
-            <Link to="/about">브랜드 소개</Link>
-          </li>
           <li className={location.pathname === "/contact" ? "active" : ""}>
             <Link to="/contact">문의</Link>
           </li>

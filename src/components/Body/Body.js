@@ -1,21 +1,18 @@
+// src/components/Body/Body.js
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainPageComponent from "../../features/main";
 import UploadPage from "../../features/upload";
 import ProductPage from "../../features/product";
-import CartPage from "../../features/product/CartPage"; // 장바구니 페이지 import 추가
+import CartPage from "../../features/product/CartPage";
 import { ProtectedRoute } from "../../utils/authUtils";
 import LoginPage from "../../features/auth/login/LoginPage";
 import RegisterPage from "../../features/auth/register/RegisterPage";
+import ProductsPage from "../../features/products/ProductsPage"; // 상품 페이지 import
+import ContactPage from "../../features/contact/ContactPage";
 import { useAuth } from "../../features/auth/AuthContext";
 import "./Body.css";
 
-/**
- * **Body 컴포넌트**
- * - 애플리케이션의 본문을 구성하는 컴포넌트입니다.
- * - 라우팅을 통해 다양한 페이지를 렌더링합니다.
- * - 사용자의 인증 상태에 따라 접근 가능한 페이지를 제한합니다.
- * @returns {JSX.Element} Body 컴포넌트
- */
 function Body() {
   const { user } = useAuth();
 
@@ -43,6 +40,14 @@ function Body() {
           }
         />
         <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <ProductsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/upload"
           element={
             <ProtectedRoute>
@@ -57,8 +62,15 @@ function Body() {
               <CartPage />
             </ProtectedRoute>
           }
-        />{" "}
-        {/* 장바구니 라우트 추가 */}
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <ContactPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/" />} />

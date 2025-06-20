@@ -31,7 +31,10 @@
   color: #222;
   text-decoration: none;
   transition: color 0.2s;
-  padding-bottom: 4px;
+  padding-bottom: 32px;
+  height: 50px;
+  width: auto;
+  max-height: 150px;
 }
 
 .navbar-menu li.active a,

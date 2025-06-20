@@ -1,57 +1,59 @@
+import React from "react";
+import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { API_URL } from "../../config/constants";
 import "./ProductCard.css";
 
-/**
- * **상품 카드 컴포넌트**
- * - 상품 정보를 표시하는 카드 형태의 컴포넌트입니다.
- * - 품절 상품은 흐리게 처리되며, 클릭할 수 없습니다.
- * @param {Object} product - 상품 정보
- * @param {string} product.productID - 상품 ID
- * @param {string} product.imageUrl - 상품 이미지 URL
- * @param {string} product.seller - 판매자 이름
- * @param {string} product.name - 상품 이름
- * @param {number} product.price - 상품 가격
- * @param {string} product.createdAt - 상품 등록일
- * @param {number} product.quantity - 상품 수량
- * @returns {JSX.Element} 상품 카드 컴포넌트
- */
-export const ProductCard = ({ product }) => {
-  const { productID, imageUrl, seller, name, price, createdAt, quantity } =
-    product;
+// 품절 오버레이 분리
+const SoldOutOverlay = () => (
+  <div className="product-blur">
+    <span className="sold-out-text">품절</span>
+  </div>
+);
+
+const ProductCardComponent = React.memo(({ product }) => {
+  const {
+    productID,
+    imageUrl,
+    seller,
+    name,
+    price,
+    createdAt,
+    quantity,
+  } = product;
+
+  const isSoldOut = quantity <= 0;
 
   return (
     <div className="product-card">
-      {/* 품절 상품 처리 */}
-      {quantity <= 0 && <div className="product-blur" />}
+      {isSoldOut && <SoldOutOverlay />}
       <Link
+        to={`/products/${productID}`}
+        className="product-link"
         style={{
           color: "inherit",
-          pointerEvents: quantity <= 0 ? "none" : "auto",
+          pointerEvents: isSoldOut ? "none" : "auto",
         }}
-        className="product-link"
-        to={`/products/${productID}`}
+        aria-disabled={isSoldOut}
+        tabIndex={isSoldOut ? -1 : 0}
       >
-        {/* 상품 카드 */}
         <div>
           <img
             className="product-img"
             src={`${API_URL}/${imageUrl}`}
-            alt="상품 이미지"
+            alt={name ? `${name} 상품 이미지` : "상품 이미지"}
           />
         </div>
-
-        {/* 상품 정보 */}
         <div className="product-contents">
           <span className="product-name">{name}</span>
-          <span className="product-price">{price}원</span>
+          <span className="product-price">{price.toLocaleString()}원</span>
           <div className="product-footer">
             <div className="product-seller">
               <img
                 className="product-avatar"
-                src="images/icons/avatar.png"
-                alt="판매자 이미지"
+                src="/images/icons/avatar.png"
+                alt={`${seller} 판매자 프로필`}
               />
               <span>{seller}</span>
             </div>
@@ -61,4 +63,20 @@ export const ProductCard = ({ product }) => {
       </Link>
     </div>
   );
+});
+
+// PropTypes 연결은 export된 이름에 맞춰주세요!
+ProductCardComponent.propTypes = {
+  product: PropTypes.shape({
+    productID: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      .isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    seller: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired,
+  }).isRequired,
 };
+
+export const ProductCard = ProductCardComponent;
