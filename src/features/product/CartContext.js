@@ -12,11 +12,12 @@ export function CartProvider({ children }) {
         (item) => item.productID === product.productID
       );
       if (idx > -1) {
-        // 이미 있으면 수량 증가
+        // 이미 있으면 수량 증가 (재고 초과 방지)
         const updated = [...prev];
+        const maxQty = product.quantity; // 재고
         updated[idx] = {
           ...updated[idx],
-          quantity: updated[idx].quantity + 1,
+          quantity: Math.min(updated[idx].quantity + 1, maxQty),
         };
         return updated;
       }

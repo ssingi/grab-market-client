@@ -58,7 +58,7 @@ function CartPage() {
                   onClick={() =>
                     updateQuantity(item.productID, item.quantity - 1)
                   }
-                  disabled={item.quantity <= 1}
+                  disabled={item.quantity <= 1} // 1 미만 불가
                 >
                   -
                 </button>
@@ -68,6 +68,10 @@ function CartPage() {
                   onClick={() =>
                     updateQuantity(item.productID, item.quantity + 1)
                   }
+                  disabled={
+                    item.quantity >= item.quantityInStock ||
+                    item.quantity >= item.quantity
+                  } // 최대 재고 초과 불가
                 >
                   +
                 </button>
