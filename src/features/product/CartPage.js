@@ -48,7 +48,9 @@ function CartPage() {
             />
             <div className="cart-item-info">
               <div className="cart-item-name">{item.name}</div>
-              <div className="cart-item-price">{item.price}원</div>
+              <div className="cart-item-price">
+                {`${item.price * item.quantity}원`}
+              </div>
               <div className="cart-item-qty">
                 수량:{" "}
                 <button
