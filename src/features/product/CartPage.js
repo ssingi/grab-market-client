@@ -1,9 +1,35 @@
 import { useCart } from "./CartContext";
 import { API_URL } from "../../config/constants";
 import "./CartPage.css";
+import { Button, message } from "antd";
+import { useAuth } from "../auth/AuthContext";
+import { purchaseProduct } from "./productHandlers";
 
 function CartPage() {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { user } = useAuth();
+
+  // 장바구니 전체 구매 처리
+  const handleCartPurchase = async () => {
+    if (!user) {
+      message.error("로그인이 필요합니다.");
+      return;
+    }
+    try {
+      for (const item of cartItems) {
+        await purchaseProduct(
+          item.productID,
+          item.quantity,
+          user.userID,
+          "주소 미입력"
+        );
+      }
+      message.success("장바구니 상품을 모두 구매했습니다.");
+      clearCart && clearCart();
+    } catch (err) {
+      message.error("구매에 실패했습니다.");
+    }
+  };
 
   if (cartItems.length === 0) {
     return <h2 className="cart-title">장바구니가 비어 있습니다.</h2>;
@@ -54,6 +80,12 @@ function CartPage() {
           </li>
         ))}
       </ul>
+      {/* 장바구니 구매 버튼 추가 */}
+      <div style={{ textAlign: "center", marginTop: 24 }}>
+        <Button type="primary" danger size="large" onClick={handleCartPurchase}>
+          구매
+        </Button>
+      </div>
     </div>
   );
 }

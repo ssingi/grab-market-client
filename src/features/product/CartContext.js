@@ -42,9 +42,18 @@ export function CartProvider({ children }) {
     setCartItems((prev) => prev.filter((item) => item.productID !== productID));
   };
 
+  // 장바구니 비우기 함수 추가
+  const clearCart = () => setCartItems([]);
+
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, updateQuantity, removeFromCart }}
+      value={{
+        cartItems,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

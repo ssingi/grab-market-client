@@ -23,7 +23,29 @@ function ProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [buyQuantity, setBuyQuantity] = useState(1); // 구매 수량 상태 추가
   const { user } = useAuth();
-  const { addToCart, cartItems, updateQuantity, removeFromCart } = useCart();
+  const { addToCart } = useCart();
+
+  // 장바구니 담기 함수 추가
+  const handleAddToCart = async () => {
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    try {
+      // 서버 shopCart에 추가
+      await axios.post(`${API_URL}/shopCart/${productID}`, {
+        userID: user.userID,
+        quantity: buyQuantity,
+      });
+      // 프론트 장바구니에도 추가
+      for (let i = 0; i < buyQuantity; i++) {
+        addToCart(product);
+      }
+      alert("장바구니에 담았습니다!");
+    } catch (err) {
+      alert("장바구니 담기에 실패했습니다.");
+    }
+  };
 
   /**
    * **상품 정보 가져오기**
@@ -123,10 +145,10 @@ function ProductPage() {
           size="large"
           type="primary"
           danger={true}
-          onClick={handlePurchase}
+          onClick={handleAddToCart} // 변경: 구매가 아니라 장바구니에 담기
           disabled={quantity === 0}
         >
-          구매하기
+          장바구니
         </Button>
 
         {/* 상품 설명 */}
