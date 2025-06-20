@@ -1,23 +1,73 @@
-#header-area {
-  width: 1024px;
-  height: 100%;
-  /* margin: 0 auto; */
-  /*logo 중앙배치*/
+.navbar {
   display: flex;
   align-items: center;
-  /*logo 중앙배치*/
   justify-content: space-between;
-}
-#header-area img {
-  width: 128px;
-  height: 36px;
+  padding: 0 48px;
+  height: 90px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 100;
+  position: sticky;
+  top: 0;
 }
 
-#header {
-  height: 64px;
-  /*중앙정렬 부분*/
+.navbar-logo img {
+  height: 150px;
+  width: auto;
+  max-height: 150px;
+}
+
+.navbar-menu {
   display: flex;
-  justify-content: center;
-  /*중앙정렬 끝*/
-  border-bottom: 1px solid gray;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.navbar-menu li a {
+  color: #222;
+  text-decoration: none;
+  transition: color 0.2s;
+  padding-bottom: 4px;
+}
+
+.navbar-menu li.active a,
+.navbar-menu li a:hover {
+  color: #1677ff;
+  border-bottom: 2px solid #1677ff;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Ant Design 버튼 커스텀 */
+.navbar-actions .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 0 16px;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-menu {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 12px;
+    align-items: flex-start;
+  }
+  .navbar-actions {
+    margin-top: 12px;
+    gap: 4px;
+  }
 }
