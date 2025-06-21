@@ -1,5 +1,3 @@
-// src/components/Body/Body.js
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainPageComponent from "../../features/main";
 import UploadPage from "../../features/upload";
@@ -8,12 +6,12 @@ import CartPage from "../../features/product/CartPage";
 import { ProtectedRoute } from "../../utils/authUtils";
 import LoginPage from "../../features/auth/login/LoginPage";
 import RegisterPage from "../../features/auth/register/RegisterPage";
-import ProductsPage from "../../features/products/ProductsPage"; // 상품 페이지 import
+import ProductsPage from "../../features/products/ProductsPage";
 import ContactPage from "../../features/contact/ContactPage";
 import { useAuth } from "../../features/auth/AuthContext";
 import "./Body.css";
 
-function Body() {
+function Body({ products, setProducts }) {
   const { user } = useAuth();
 
   return (
@@ -27,7 +25,7 @@ function Body() {
           path="/main"
           element={
             <ProtectedRoute>
-              <MainPageComponent />
+              <MainPageComponent products={products} />
             </ProtectedRoute>
           }
         />
@@ -43,7 +41,7 @@ function Body() {
           path="/products"
           element={
             <ProtectedRoute>
-              <ProductsPage />
+              <ProductsPage products={products} />
             </ProtectedRoute>
           }
         />
@@ -51,7 +49,7 @@ function Body() {
           path="/upload"
           element={
             <ProtectedRoute>
-              <UploadPage />
+              <UploadPage products={products} setProducts={setProducts} />
             </ProtectedRoute>
           }
         />

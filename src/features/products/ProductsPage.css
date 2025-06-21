@@ -1,0 +1,19 @@
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+  width: 100%;          /* 추가: 전체 너비 */
+  max-width: 1200px;    /* 추가: 원하는 최대 너비 (예시) */
+  margin-left: auto;    /* 가운데 정렬 */
+  margin-right: auto;
+}
+.product-list > div {
+  flex: 0 1 calc(25% - 16px);
+  min-width: 220px;
+  max-width: 300px;    /* 필요시 추가 */
+  margin-bottom: 16px;
+}
+

@@ -1,12 +1,20 @@
-import React from "react";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
+import "./ProductsPage.css";
 
-function ProductsPage() {
+
+function ProductsPage({ products }) {
+  console.log('ProductsPage products:', products)
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>
-      <h1>상품 전체 보기</h1>
-      <p>이곳에 전체 상품 리스트를 보여줍니다.</p>
+    <div>
+      <h1>전체 상품</h1>
+      <section className="product-list">
+        {products.map((p) => (
+          <div key={p.id}>
+            <ProductCard product={p} />
+          </div>
+        ))}
+      </section>
     </div>
   );
 }
-
 export default ProductsPage;

@@ -15,7 +15,8 @@ import { useAuth } from "../auth/AuthContext.js";
  *
  * @returns {JSX.Element} 업로드 페이지 컴포넌트
  */
-const UploadPage = () => {
+// ↓↓↓ 변경: products, setProducts를 props로 받기
+const UploadPage = ({ products, setProducts }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -26,7 +27,16 @@ const UploadPage = () => {
       <Form
         form={form}
         name="상품 업로드"
-        onFinish={(values) => onSubmit({ values, imageUrl, navigate })}
+        // ↓↓↓ 변경: onSubmit에 products, setProducts 전달
+        onFinish={(values) =>
+          onSubmit({
+            values,
+            imageUrl,
+            navigate,
+            products,      // 추가
+            setProducts,   // 추가
+          })
+        }
         initialValues={{ price: 0 }}
       >
         {/* 상품 사진 업로드 */}

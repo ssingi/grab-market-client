@@ -1,9 +1,11 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Body from "./components/Body/Body";
-import { Footer } from "./components/Footer/Footer"; // named import로 수정!
+import { Footer } from "./components/Footer/Footer";
 import { AuthProvider } from "./features/auth/AuthContext";
-import { CartProvider } from "./features/product/CartContext"; // CartProvider import 추가
+import { CartProvider } from "./features/product/CartContext";
+import { fetchProducts } from "./features/main/mainHandlers"; // 상품 불러오는 함수 import
 
 /**
  * **App 컴포넌트**
@@ -16,10 +18,26 @@ import { CartProvider } from "./features/product/CartContext"; // CartProvider i
  * @returns {JSX.Element} App 컴포넌트
  */
 function App() {
+  // products 상태를 localStorage와 연동
+  const [products, setProducts] = useState(() => {
+    const saved = localStorage.getItem("products");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 최초 렌더링 시 서버에서 상품 불러오기
+  useEffect(() => {
+    fetchProducts(setProducts);
+  }, []);
+
+  // products가 바뀔 때마다 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
+
   return (
     <div>
       <Header />
-      <Body />
+      <Body products={products} setProducts={setProducts} />
       <Footer />
     </div>
   );
